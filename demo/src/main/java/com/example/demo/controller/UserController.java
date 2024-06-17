@@ -50,12 +50,14 @@ public class UserController {
     }
 
     @GetMapping("/getuser/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+    public ResponseEntity<User> getUserById(@PathVariable Long id) throws Exception {
+        log.info("Entering the request of getting the user data by its userId {}:", id);
         User user = userService.getUserById(id);
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping("/getusers")    public ResponseEntity<List<User>> getAllUsers() {
+    @GetMapping("/getusers")
+    public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
