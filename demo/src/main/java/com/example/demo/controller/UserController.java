@@ -15,32 +15,39 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping
+    @PostMapping("/adduser")
     public ResponseEntity<User> createUser(@RequestBody User user) {
         User createdUser = userService.createUser(user);
         return ResponseEntity.ok(createdUser);
     }
 
-    @PutMapping("/{id}")
+    @PostMapping("/addusers")
+    public ResponseEntity<List<User>> createUsers(@RequestBody List<User> users) {
+        for (User user : users) {
+            userService.createUser(user);
+        }
+        return ResponseEntity.ok(users);
+    }
+
+    @PutMapping("/updateuser/{id}")
     public ResponseEntity<User> updateUser(@RequestBody User user, @PathVariable Long id) {
         User updatedUser = userService.updateUser(user, id);
         return ResponseEntity.ok(updatedUser);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/getuser/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         User user = userService.getUserById(id);
         return ResponseEntity.ok(user);
     }
 
-    @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
+    @GetMapping("/getusers")    public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
